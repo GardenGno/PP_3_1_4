@@ -24,7 +24,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
-    public User findByUsername(String user){
+    public User findByUsername(String user) {
         return userRepository.findByUsername(user);
     }
 
@@ -32,7 +32,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = findByUsername(username);
-        if(user==null){
+        if (user == null) {
             throw new UsernameNotFoundException(String.format("User '%s' not found", username));
         }
 
@@ -43,7 +43,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
     }
 
 
-    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){
-        return roles.stream().map(r->new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
+    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
+        return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
     }
 }
