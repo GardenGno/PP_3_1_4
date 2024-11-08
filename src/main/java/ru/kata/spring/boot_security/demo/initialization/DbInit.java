@@ -27,6 +27,7 @@ public class DbInit {
         roleRepository.save(roleUser);
         user.setFirstName("user");
         user.setLastName("user");
+        user.setAge(Long.valueOf(7));
         user.setEmail("user@user.com");
         user.setUsername("user");
         user.setPassword("user");
@@ -39,6 +40,7 @@ public class DbInit {
         roleRepository.save(roleAdmin);
         admin.setFirstName("admin");
         admin.setLastName("admin");
+        admin.setAge(Long.valueOf(21));
         admin.setEmail("admin@admin.com");
         admin.setUsername("admin");
         admin.setPassword("admin");

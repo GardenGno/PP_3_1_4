@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Entity
@@ -31,6 +32,9 @@ public class User implements UserDetails {
 
     @Column(name = "email")
     private String email;
+
+    @Column(name="age")
+    private Long age;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -76,6 +80,14 @@ public class User implements UserDetails {
         this.email = email;
     }
 
+    public Long getAge() {
+        return age;
+    }
+
+    public void setAge(Long age) {
+        this.age = age;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -90,6 +102,13 @@ public class User implements UserDetails {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public String rolesToString(Set<Role> roles){
+        String result = roles.stream().map(role -> role.getName()
+                        .replace("ROLE_",""))
+                        .collect(Collectors.joining(", "));
+        return result;
     }
 
     @Override

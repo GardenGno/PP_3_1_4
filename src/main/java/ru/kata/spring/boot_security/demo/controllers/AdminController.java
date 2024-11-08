@@ -12,7 +12,9 @@ import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
 import ru.kata.spring.boot_security.demo.services.UserServiceImpl;
 
+import java.security.Principal;
 import java.util.List;
+
 
 @Controller
 public class AdminController {
@@ -25,21 +27,16 @@ public class AdminController {
     }
 
     @GetMapping("/admin/adminPage")
-    public String showAllUsers(ModelMap model) {
+    public String showAllUsers(Principal principal,ModelMap model) {
         List<User> allUsers = userServiceImpl.getAllUsers();
         model.addAttribute("allUsers", allUsers);
-
+        User user = userServiceImpl.findByUsername(principal.getName());
+        model.addAttribute("user", user);
+        List<Role> roles = roleRepository.findAll();
+        model.addAttribute("allRoles", roles);
         return "/admin/adminPage";
     }
 
-    @GetMapping("/admin/addNewUser")
-    public String addNewUser(ModelMap model) {
-        User user = new User();
-        model.addAttribute("user", user);
-        List<Role> roles = (List<Role>) roleRepository.findAll();
-        model.addAttribute("allRoles", roles);
-        return "/admin/add_new_user";
-    }
 
     @PostMapping("/admin/saveUser")
     public String saveUser(@ModelAttribute("user") User user) {
@@ -53,14 +50,6 @@ public class AdminController {
         return "redirect:/admin/adminPage";
     }
 
-    @GetMapping("/admin/updateInfo")
-    public String updateInfo(@RequestParam("userId") Long id, ModelMap model) {
-        User user = userServiceImpl.getUserById(id);
-        model.addAttribute("user", user);
-        List<Role> roles = (List<Role>) roleRepository.findAll();
-        model.addAttribute("allRoles", roles);
-        return "/admin/update_user_info";
-    }
 
     @PostMapping("/admin/deleteUser")
     public String deleteUser(@RequestParam("userId") Long id) {

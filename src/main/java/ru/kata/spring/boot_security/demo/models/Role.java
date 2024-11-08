@@ -76,6 +76,6 @@ public class Role implements GrantedAuthority {
 
     @Override
     public String toString() {
-        return this.name;
+        return this.name.substring(this.name.indexOf("_")+1);
     }
 }
