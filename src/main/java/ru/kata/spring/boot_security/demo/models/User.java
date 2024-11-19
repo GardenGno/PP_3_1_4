@@ -3,6 +3,7 @@ package ru.kata.spring.boot_security.demo.models;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -33,7 +34,7 @@ public class User implements UserDetails {
     @Column(name = "email")
     private String email;
 
-    @Column(name="age")
+    @Column(name = "age")
     private Long age;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -104,10 +105,10 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    public String rolesToString(Set<Role> roles){
+    public String rolesToString(Set<Role> roles) {
         String result = roles.stream().map(role -> role.getName()
-                        .replace("ROLE_",""))
-                        .collect(Collectors.joining(", "));
+                        .replace("ROLE_", ""))
+                .collect(Collectors.joining(", "));
         return result;
     }
 
@@ -115,6 +116,7 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
     }
+
 
     @Override
     public String getPassword() {

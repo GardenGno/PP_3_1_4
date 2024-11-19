@@ -33,8 +33,8 @@ public class UserServiceImpl implements UserService {
         String encodedPass = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPass);
         userRepository.save(user);
-    }
 
+    }
 
     @Transactional(readOnly = true)
     @Override
